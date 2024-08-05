@@ -32,18 +32,14 @@
             <li>
               <hr class="dropdown-divider" />
             </li>
+            {% for product in products %}
             <li>
-              <a class="dropdown-item" href="#!">Popular Items</a>
+              <a class="dropdown-item" href="{% url 'category' product.category %}">{{ product.name }}</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'category' 'Cell-Phone' %}">Cell Phones</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'category' 'TABLETS' %}">Tablets</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{% url 'category' 'Programming-Books' %}">Programming Books</a>
-            </li>
+            
+            {% endfor %}
+            
           </ul>
         </li>
       </ul>
