@@ -6,7 +6,9 @@
     <div class="card mb-3">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+                <a href = "{%url 'home' %}">
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}" style="width: 100%; height: 50;" >
+                </a>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -44,6 +46,8 @@
                         
                         <br>
                         <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                        <br>
+                        <br>
                         <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Add to Cart</button>
                     </center>
                 </div>
