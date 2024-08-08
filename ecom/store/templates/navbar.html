@@ -16,22 +16,35 @@
         </li>
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
               <li>
                 <a class="dropdown-item" href="{% url 'update_user' %}">User Profile</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'update_info' %}">User Info</a>
               </li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <a class="dropdown-item" href="{% url 'update_info' %}">User Info</a>
-              </li>                            
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+              </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
+          {% if user.is_superuser %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdownOrders" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Orders</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownOrders">
+                <li>
+                  <a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped Orders</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'not_shipped_dash' %}">Unshipped Orders</a>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
         {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -41,20 +54,18 @@
           </li>
         {% endif %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownCategories" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownCategories">
             <li>
               <a class="dropdown-item" href="{% url 'category_summary' %}">All Products</a>
             </li>
             <li>
               <hr class="dropdown-divider" />
             </li>
-              {% for category in categories %}
-            <li>
-              <a class="dropdown-item" href="{% url 'category' category.name %}">{{ category.name }}</a>
-            </li>
-            <li>
-            
+            {% for category in categories %}
+              <li>
+                <a class="dropdown-item" href="{% url 'category' category.name %}">{{ category.name }}</a>
+              </li>
             {% endfor %}
           </ul>
         </li>
