@@ -1,9 +1,14 @@
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#Load out environmental variables
+
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -15,7 +20,8 @@ SECRET_KEY = 'django-insecure-r^&foq418he*kt8me9@c6v6j9zi!8-+3m7bqx-@f24jp=2@^2i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.4.64','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['djangoecom-production-1a14.up.railway.app','https;//djangoecom-production-1a14.up.railway.app']
+CSRF_TRUSTED_ORGINS = ['djangoecom-production-1a14.up.railway.app','https;//djangoecom-production-1a14.up.railway.app']
 
 
 # Application definition
@@ -29,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'cart',
-    'payment'
+    'payment',
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -40,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecom.urls'
@@ -69,17 +77,23 @@ WSGI_APPLICATION = 'ecom.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER':,
-        'PASSWORD':,
-        'HOST':,
-        'PORT':,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'basana',
+        'USER': 'admin',
+        'PASSWORD': os.environ.get('DB_PASSWORD_YO'),
+        'HOST': 'database-1.cdms2m4uixut.us-east-1.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -117,6 +131,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+#White Noise static stuff
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR/ 'staticfiles'
 
 
 MEDIA_URL = 'media/'
